@@ -1,0 +1,20 @@
+{
+  "name": "Open all Imgur pictures",
+  "description": "Open all Imgur pictures in their own tabs.",
+  "version": "0.1",
+  "minimum_chrome_version": "16.0.884",
+  "permissions": ["tabs", "declarativeContent" ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    { "matches": ["http://*.imgur.com/*","http://imgur.com/*"], "js": ["main.js"] }
+  ],
+  "page_action" :
+  {
+    "default_icon" : "favicon.png",
+    "default_title" : "Open images"
+  },
+  "manifest_version": 2
+}
