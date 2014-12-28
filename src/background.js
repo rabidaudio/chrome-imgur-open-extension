@@ -16,11 +16,18 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.pageAction.onClicked.addListener(function(){
+    console.log("clicked");
+    console.log("inserting");
+    chrome.tabs.executeScript(null, {file: "main.js"}); //content scripts don't like incognito. Inserting manually.
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {command: "execute"}, function(links){
+      var current = tabs[0];
+      chrome.tabs.sendMessage(current.id, {command: "execute"}, function(links){
+        console.log("received");
+        console.log(links);
         for( var k=0; k<links.length; k++){
-            chrome.tabs.create({url: links[k]});
+            chrome.tabs.create({url: links[k], active: false});
         }
+        
       });
     });
 });

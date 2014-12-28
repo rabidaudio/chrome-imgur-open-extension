@@ -1,13 +1,13 @@
-//div.album-image img -> src
+//div.image img -> src
 
 execute = function(){
-    var containers = document.body.getElementsByClassName('album-image');
     var links=[];
+    var containers = document.body.getElementsByClassName('image');
     for( var i=0; i<containers.length; i++){
         var imgs =containers[i].getElementsByTagName('img');
         for( var j=0; j<imgs.length; j++){
-            var url = "http:"+imgs[j].getAttribute('src');
-            if( url.match(/http:\/\/i.imgur.com\/.*\.[a-z]+/) )
+            var url = "http:"+(imgs[j].getAttribute('src') );
+            if( url.match(/http:\/\/i.imgur.com\/.*\.[a-z]+/)&& links.indexOf(url) < 0 )
                 links.push(url);
         }
     }
@@ -15,7 +15,8 @@ execute = function(){
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log("sending ");
     sendResponse(execute());
 });
 
-//alert("injected");
+//alert("inserted");
